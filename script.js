@@ -10,15 +10,22 @@ let page = 1;
 
 async function searchImages (){
     inputData = inputEl.value;
-    const url = `https://api.unsplash.com/search/photos?page=${page}&query=$
-    {inputData}&client_id=${accessKey}`
+    const url = `https://api.unsplash.com/search/photos?page=${page}&query=${inputData}&client_id=${accessKey}`
     const response = await fetch (url)
-    const data = await response.json
+    const data = await response.json ();
 
-    const results = data.result
-    if (page === 1 ) {
-        searchResult.innerHTML = "";
-    }
+    console.log ("response", response, "data", data);
+
+
+    const results = data.results
+
+    console.log ("Results check", results );
+
+    // if (page === 1 ) {
+    //     searchResult.innerHTML = "";
+    // }
+
+   
 
     results.map ((result) => {
         const imageWrapper = document.createElement("div");
@@ -27,7 +34,7 @@ async function searchImages (){
         image.src = result.urls.small;
         image.alt = result.alt_description;
         const imageLink =document.createElement("a");
-        imageLink.href = result.link.html;
+        imageLink.href = result.links.html;
         imageLink.target = "_blank";
         imageLink.textContent = result.alt_description;
 
@@ -39,7 +46,8 @@ async function searchImages (){
 
     )}
 
-    page++
+
+
 
     if (page > 1){
         showMore.style.display = "block"
@@ -57,3 +65,7 @@ formEl.addEventListener("submit", (event) => {
 showMore.addEventListener("click", () => {
     searchImages ()
 })
+
+page++
+
+// show more icin 2. sayfa ve numara ekleme
